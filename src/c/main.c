@@ -14,7 +14,7 @@ void print_numbers() {
   return;
 }
 
-void print_inverse() { int i = 0; printf("Printing inverse numbers...\n"); for (i = NUMBERS-1; i >= 0; i--) { printf("\t%d\n", i); } printf("Done!\n"); return; }
+            void print_inverse() { int i = 0; printf("Printing inverse numbers...\n"); for (i = NUMBERS-1; i >= 0; i--) { printf("\t%d\n", i); } printf("Done!\n"); return; }
 
 int main(int argc, char *argv[]) {
   printf("This is a test program");
