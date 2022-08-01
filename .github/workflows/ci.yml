@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches: [ master ]
-  pull_request:
+  pull_request_target:
     branches: '*'
 
 # Run only one instance of this workflow at a time
@@ -21,6 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.head_ref }}
       - name: setup formatters
         run: |
