@@ -10,7 +10,9 @@ then
     echo "Error: black is not installed"
     exit 1
 else
-    black .
+    git ls-tree --full-tree -r --name-only HEAD \
+        | grep "\.py$" \
+        | xargs black
 fi
 
 echo "black format run complete"

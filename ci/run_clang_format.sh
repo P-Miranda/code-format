@@ -11,7 +11,8 @@ then
     echo "Error: clang-format is not installed"
     exit 1
 else
-    git ls-files *.c *.h *.cpp *.hpp \
+    git ls-tree --full-tree -r --name-only HEAD \
+        | grep -E "\.c$|\.h$|\.cpp$|\.hpp$" \
         | xargs clang-format -style=file -fallback-style=none -i -verbose
     echo "clang-format complete"
 fi
