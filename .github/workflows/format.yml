@@ -1,21 +1,19 @@
-name: format
+name: Format
 
 on:
   push:
-    paths:
-      - "**.c"
-      - "**.h"
-      - "**.cpp"
-      - "**.hpp"
+    branches: [ master ]
+  pull_request:
+    branches: '*'
 
 jobs:
-  ci:
+  format:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
         with:
-            ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref }}
       - name: setup formatters
         run: sudo ./ci/setup_clang.sh
       - name: format C/C++ sources
@@ -23,5 +21,5 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-            commit_message: Apply formatting changes
-            branch: ${{ github.head_ref }}
+          commit_message: "format: Apply formatting changes"
+          branch: ${{ github.head_ref }}
