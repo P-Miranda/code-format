@@ -14,10 +14,11 @@ concurrency:
 
 jobs:
   format:
-    if: ${{ github.event }} == 'pull_request'
+    if: |
+      ${{ github.event_name }} != 'pull_request' ||
+      ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: ${{ !cancelled() }}
 
     steps:
       - uses: actions/checkout@v3
@@ -38,9 +39,9 @@ jobs:
           commit_message: "format: Apply formatting changes"
           branch: ${{ github.head_ref }}
   ci:
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: ${{ !cancelled() }}
     needs: [ format ]
 
     steps:
