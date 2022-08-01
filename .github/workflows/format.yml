@@ -1,0 +1,36 @@
+name: Format
+
+on:
+  push:
+    branches: [ * ]
+
+# Run only one instance of this workflow at a time
+# cancel-in-progress: stop running workflow and run latest instead
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.head_ref }}
+      - name: setup formatters
+        run: |
+          sudo ./ci/setup_clang.sh
+          sudo ./ci/setup_python.sh
+      - name: format C/C++ sources
+        run: ./ci/run_clang_format.sh
+      - name: format python sources
+        run: ./ci/run_black_format.sh
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "format: Apply formatting changes"
+          branch: ${{ github.head_ref }}
