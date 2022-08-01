@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #define NUMBERS (10)
+
 void print_numbers() {
   int i = 0;
   printf("Printing numbers...\n");
@@ -12,6 +13,9 @@ void print_numbers() {
   printf("Done!\n");
   return;
 }
+
+void print_inverse() { int i = 0; printf("Printing inverse numbers...\n"); for (i = NUMBERS-1; i >= 0; i--) { printf("\t%d\n", i); } printf("Done!\n"); return; }
+
 int main(int argc, char *argv[]) {
   printf("This is a test program");
   for (int i = 0; i < argc; i++) {
@@ -19,6 +23,7 @@ int main(int argc, char *argv[]) {
   }
 
   print_numbers();
+  print_inverse();
 
   return EXIT_SUCCESS;
 }
