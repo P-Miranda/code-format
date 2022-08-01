@@ -16,8 +16,11 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: setup formatters
         run: sudo ./ci/setup_clang.sh
+        run: sudo ./ci/setup_python.sh
       - name: format C/C++ sources
         run: ./ci/run_clang_format.sh
+      - name: format python sources
+        run: ./ci/run_black_format.sh
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
