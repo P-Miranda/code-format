@@ -13,35 +13,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  format:
-    if: ${{ github.event }} == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: ${{ !cancelled() }}
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.head_ref }}
-      - name: setup formatters
-        run: |
-          sudo ./ci/setup_clang.sh
-          sudo ./ci/setup_python.sh
-      - name: format C/C++ sources
-        run: ./ci/run_clang_format.sh
-      - name: format python sources
-        run: ./ci/run_black_format.sh
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "format: Apply formatting changes"
-          branch: ${{ github.head_ref }}
   ci:
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: ${{ !cancelled() }}
-    needs: [ format ]
 
     steps:
       - uses: actions/checkout@v3
